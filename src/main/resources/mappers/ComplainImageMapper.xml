@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--ComplainImageMapper.xml-->
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.complaint.repository.ImageRepo">
+
+    <select id="findById" resultType="com.complaint.Entity.ComplainFile">
+        select * from complain_file where complain_id=#{id}
+    </select>
+
+    <insert id="save" parameterType="com.complaint.Entity.ComplainFile">
+        insert into complain_file( complain_id , file_name, file_path )
+         values( #{complainId}, #{fileName}, #{filePath} )
+    </insert>
+</mapper>

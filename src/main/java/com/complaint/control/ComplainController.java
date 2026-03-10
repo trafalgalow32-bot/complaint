@@ -23,6 +23,26 @@ public class ComplainController {
    @Autowired
     private ComplainService complainService;
 
+   // 민원 상세 페이지 요청
+   @GetMapping("/detail")
+   public String detail( @RequestParam("id") long id, Model model) {
+
+       model.addAttribute("detail", complainService.getDetail( id ));
+
+       return "board/detail";
+   }
+
+   // 민원 조회 - 로그인 계정별 작성 글만 조회
+   @GetMapping("/list")
+   public String listComplain(Model model, Principal principal) {
+
+       String username = principal.getName(); // 로그인 계정명
+
+       model.addAttribute("list" , complainService.getList( username ));
+
+       return "board/list";
+   }
+
    // 민원작성 데이터를 처리 - 이미지도 같이 처리
     @PostMapping("/writeSave")
     public String writeSave(@Valid ComplainWriteDto complainWriteDto,
@@ -36,6 +56,7 @@ public class ComplainController {
         try {
             complainService.save( principal.getName(), complainWriteDto, multipartFiles );
         } catch( Exception e ) {
+            e.printStackTrace();
             model.addAttribute("message", "이미지 또는 파일 업로드 실패");
             return "board/write";
         }

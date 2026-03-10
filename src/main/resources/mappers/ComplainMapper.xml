@@ -5,6 +5,20 @@
 
 <mapper namespace="com.complaint.repository.ComplainRepo">
 
+    <select id="findById" resultType="com.complaint.Entity.Complain">
+
+        select * from complain where id=#{id}
+
+    </select>
+
+    <select id="findByUserName" parameterType="string"
+            resultType="com.complaint.Entity.Complain">
+
+        select c.* from complain c join user2 u
+        on c.user_id = u.id where u.userId = #{username}
+        order by c.id desc;
+
+    </select>
     <select id="find"
         resultType="com.complaint.Entity.Complain">
 
